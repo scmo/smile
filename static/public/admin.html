@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Confirm face</h1>
+<ul class="list-group">
+  <li class="list-group-item">
+  	<button type="button" class="btn" onclick="javascript:confirmFace(1);">Confirm Yumi</button>
+  </li>
+  <li class="list-group-item">
+  	<button type="button" class="btn" onclick="javascript:confirmFace(2);">Confirm Joel</button>
+  </li>
+  <li class="list-group-item">
+  	<button type="button" class="btn" onclick="javascript:confirmFace(3);">Confirm Moritz</button>
+  </li>
+  <li class="list-group-item">
+  	<button type="button" class="btn" onclick="javascript:confirmFace(0);">Unknown</button>
+  </li>
+
+</ul>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	/*
+		0 unknown
+		1 Yumi
+		2 Joel
+		3 Moritz
+	*/
+
+	function confirmFace(nr){
+		var xhttp = new XMLHttpRequest();
+		// post('/confirmface/', {user: nr});
+		xhttp.open('POST', '/confirmface/', true);
+		xhttp.setRequestHeader('Content-type', 'application/json')
+		xhttp.send(JSON.stringify({nr: nr}))
+	}
+</script>
+</body>
+</html>

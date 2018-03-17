@@ -2,13 +2,19 @@
 var express = require('express')
 var fs = require('fs')
 var https = require('https')
+
+
+// var app = require('express')();
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+
 var app = express()
 var path = require('path');
 const axios = require('axios')
 var cloudinary = require('cloudinary')
 const bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 
 
 var config = require('./config.js');
@@ -36,16 +42,61 @@ persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 
 
 app.use(express.static("static/public"));
+
+
+var server = https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app)
+.listen(3000, function () {
+  console.log('Example app listening on port 3000! Go to https://localhost:3000/')
+  //trainPersonGroup()
+})
+var io = require('socket.io').listen(server)
+
+// Routes
 app.get('/', function (req, res) {
 	console.log(__dirname)
 	res.sendFile(path.join(__dirname + '/index.html'));
    	//res.send('Hello Worffld!')
 })
 
+app.get('/socket.io', function (req, res) {
+console.log('adsf')
+})
+
 app.post('/faceimage', function (req, res) {
 	uploadBlob(req.body.imgBase64);
 	res.sendStatus(200)
- });
+});
+
+app.post('/confirmface', function(req,res) {
+	const body = req.body.nr
+	data = {recognized: false }
+	if (body > 0) {
+		data = {recognized: true }
+		switch(body) {
+			case 1:
+				data.name = 'Yumi';
+				break
+			case 2:
+				data.name = 'Joel';
+				break
+			case 3:
+				data.name = 'Moritz';
+				break
+		}
+	}
+	
+	io.emit('confirmFace', data)
+  	res.send(`You sent: ${body} to Express`)
+});
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+   //socket.broadcast.emit('hi');
+    //socket.emit('notify', 'adsfadsf');
+});
 
 // app.listen(3000, function () {
 //    console.log('Example app listening on port 3000!')
@@ -61,14 +112,8 @@ app.post('/faceimage', function (req, res) {
 // })
 
 
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-}, app)
-.listen(3000, function () {
-  console.log('Example app listening on port 3000! Go to https://localhost:3000/')
-  //trainPersonGroup()
-})
+
+
 
 function trainPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
@@ -167,21 +212,18 @@ function detectFace(faceURL) {
 }
 
 function identifyFace(faces) {
-
 	url = baseURL + '/face/v1.0/identify'
 	
 	const data = {
 		faceIds: faces.map(face => face.faceId),
     	personGroupId: personGroupId
     }
-
 	const params = {
     	headers: {
     		'Content-Type':'application/json',
             'Ocp-Apim-Subscription-Key': apiKey,
     	}
     }
-
 	axios.post(url, data, params)
 	.then(function (response) {
 		//console.log(response);
@@ -192,12 +234,16 @@ function identifyFace(faces) {
 			face.candidates.forEach(function(candidate) {
 				//console.log(candidate)
 				console.log(persons[candidate.personId].name + ' - Confidence: ' + candidate.confidence)
+				if(candidate.confidence > 0.6) {
+					res = {recognized: true, name: 'asdf' }
+					io.emit('confirmFace', res)
+				}
 			})	
 		})
 
 	})
 	.catch(function (error) {
-		// console.log(error);
+		console.log(error);
 		console.error('error identifyFace')
 	});
 }
@@ -211,5 +257,3 @@ function uploadBlob(imgData) {
     	detectFace(result.secure_url)
     });
 }
-
- 
