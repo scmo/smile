@@ -52,8 +52,8 @@ app.use(express.static("static/public"));
 
 
 var server = https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  // key: fs.readFileSync('server.key'),
+  // cert: fs.readFileSync('server.cert')
 }, app)
 .listen(3000, function () {
   console.log('Example app listening on port 3000! Go to https://localhost:3000/')
