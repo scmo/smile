@@ -51,6 +51,7 @@ var server = https.createServer({
 .listen(3000, function () {
   console.log('Example app listening on port 3000! Go to https://localhost:3000/')
   //trainPersonGroup()
+  // /getPersonGroup()
 })
 var io = require('socket.io').listen(server)
 
@@ -61,9 +62,7 @@ app.get('/', function (req, res) {
    	//res.send('Hello Worffld!')
 })
 
-app.get('/socket.io', function (req, res) {
-console.log('adsf')
-})
+
 
 app.post('/faceimage', function (req, res) {
 	uploadBlob(req.body.imgBase64);
@@ -91,6 +90,14 @@ app.post('/confirmface', function(req,res) {
 	io.emit('confirmFace', data)
   	res.send(`You sent: ${body} to Express`)
 });
+
+app.post('/confirmpurchase', function(req,res) {
+
+	io.emit('confirmPurchase', '')
+  	res.send(`You sent: confirmpurchase to Express`)
+});
+
+
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -235,7 +242,7 @@ function identifyFace(faces) {
 				//console.log(candidate)
 				console.log(persons[candidate.personId].name + ' - Confidence: ' + candidate.confidence)
 				if(candidate.confidence > 0.6) {
-					res = {recognized: true, name: 'asdf' }
+					res = {recognized: true, name: persons[candidate.personId].name}
 					io.emit('confirmFace', res)
 				}
 			})	

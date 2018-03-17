@@ -143,7 +143,9 @@ socket.on('confirmFace', function(data){
     console.log('person: ' + data.name);
 });
 
-
+socket.on('confirmPurchase', function(data){
+    console.log('purchase confirmed!');
+});
 
 });
 

@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<title>Smile Admin</title>
+<style type="text/css">
+	button {
+		width: 100%
+	}
+</style>
 </head>
 <body>
 
@@ -21,6 +26,14 @@
   </li>
 
 </ul>
+
+
+<h1>Confirm last step</h1>
+<ul class="list-group">
+  <li class="list-group-item">
+  	<button type="button" class="btn" onclick="javascript:confirmPurchase();">Confirm purchase</button>
+  </li>
+</ul>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -37,13 +50,20 @@
 		2 Joel
 		3 Moritz
 	*/
-
 	function confirmFace(nr){
 		var xhttp = new XMLHttpRequest();
 		// post('/confirmface/', {user: nr});
 		xhttp.open('POST', '/confirmface/', true);
 		xhttp.setRequestHeader('Content-type', 'application/json')
 		xhttp.send(JSON.stringify({nr: nr}))
+	}
+
+	function confirmPurchase(){
+		var xhttp = new XMLHttpRequest();
+		// post('/confirmface/', {user: nr});
+		xhttp.open('POST', '/confirmpurchase/', true);
+		xhttp.setRequestHeader('Content-type', 'application/json')
+		xhttp.send()
 	}
 </script>
 </body>
