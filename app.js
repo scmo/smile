@@ -44,6 +44,24 @@ persons['67203687-01b7-4304-8b0a-3e30d74a9560'] = {
 persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 	name: 'Moritz'
 }
+persons['fdadcb08-124a-4b18-a380-c158a38a6136'] = {
+	name: 'Andreas'
+}
+persons['7bdd1874-52f5-47b1-ba99-ea0dbf827cd8'] = {
+	name: 'Valeria'
+}
+persons['e31196b2-5acc-4436-9bef-d21adcfc8be1'] = {
+	name: 'Karin'
+}
+persons['71a17cd9-7d68-4827-8d8d-2fd4155865d1'] = {
+	name: 'Daniel'
+}
+persons['2a31fecf-8293-4229-b890-5444a93f2b9e'] = {
+	name: 'Lina'
+}
+persons['569122bd-851f-4047-8914-7ed8f41dc45e'] = {
+	name: 'Fabian'
+}
 
 
 app.use(express.static("static/public"));
@@ -91,6 +109,24 @@ app.post('/confirmface', function(req,res) {
 				break
 			case 3:
 				data.name = 'Moritz';
+				break
+			case 4:
+				data.name = 'Andreas';
+				break
+			case 5:
+				data.name = 'Valeria';
+				break
+			case 6:
+				data.name = 'Karin';
+				break
+			case 7:
+				data.name = 'Daniel';
+				break
+			case 8:
+				data.name = 'Lina';
+				break
+			case 9:
+				data.name = 'Fabian';
 				break
 		}
 	}
