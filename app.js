@@ -75,6 +75,8 @@ app.get('/', function (req, res) {
    	//res.send('Hello Worffld!')
 })
 
+app.get('/socket.io', function (req, res) {
+})
 
 
 app.post('/faceimage', function (req, res) {
