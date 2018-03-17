@@ -1,7 +1,8 @@
 //app.js
 var express = require('express')
-var fs = require('fs')
-var https = require('https')
+//var fs = require('fs')
+var http = require('http')
+// var https = require('https')
 var app = express()
 var path = require('path');
 const axios = require('axios')
@@ -51,12 +52,17 @@ persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 app.use(express.static("static/public"));
 
 var port = process.env.PORT || 3000;
-var server = https.createServer({
-  // key: fs.readFileSync('server.key'),
-  // cert: fs.readFileSync('server.cert')
-}, app)
-.listen(3000, function () {
-  console.log('Example app listening on port 3000! Go to https://localhost:3000/')
+// var server = https.createServer({
+//   // key: fs.readFileSync('server.key'),
+//   // cert: fs.readFileSync('server.cert')
+// }, app)
+// .listen(3000, function () {
+//   console.log('Example app listening on port 3000! Go to https://localhost:3000/')
+//   //trainPersonGroup()
+//   // /getPersonGroup()
+// })
+var server = app.listen(3000, function () {
+  console.log('Example app listening on port 3000! Go to http://localhost:3000/')
   //trainPersonGroup()
   // /getPersonGroup()
 })
