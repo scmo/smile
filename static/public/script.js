@@ -177,7 +177,7 @@ socket.on('confirmFace', function(dataPerson){
 
 socket.on('confirmPurchase', function(data){
     console.log('purchase confirmed!');
-
+    turnOffCamera()
     $('.paymentconfirm').show(0, function(){
       setInterval(function() {
         
@@ -187,6 +187,12 @@ socket.on('confirmPurchase', function(data){
     });
 
 });
+
+function turnOffCamera(){
+  var video = document.querySelector('#screenshot-video');
+  video.pause(); 
+  video.srcObject.getVideoTracks()[0].stop();
+}
 
 });
 
