@@ -2,12 +2,6 @@
 var express = require('express')
 var fs = require('fs')
 var https = require('https')
-
-
-// var app = require('express')();
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-
 var app = express()
 var path = require('path');
 const axios = require('axios')
@@ -17,19 +11,32 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 
 
-var config = require('./config.js');
+var config =  {}
+var apiKey = {}
+try {
+	config = require('./config.js');
 
-cloudinary.config({ 
-  cloud_name: config.cloudinary.cloud_name, 
-  api_key: config.cloudinary.api_key, 
-  api_secret: config.cloudinary.api_secret 
-});
+	apiKey = config.azure.key
+	cloudinary.config({ 
+		cloud_name: config.cloudinary.cloud_name, 
+		api_key: config.cloudinary.api_key, 
+		api_secret: config.cloudinary.api_secret 
+	});
+    // do stuff
+} catch (ex) {
+    apiKey = process.env.ENV_AZURE_APIKEY
+	cloudinary.config({ 
+		cloud_name: process.env.ENV_CLOUDINARY_CLOUDNAME, 
+		api_key: process.env.ENV_CLOUDINARY_APIKEY, 
+		api_secret: process.env.ENV_CLOUDINARY_APISECRET
+	});
+}
+
+
 
 const baseURL = 'https://westcentralus.api.cognitive.microsoft.com'
-const apiKey = config.azure.key 
 const personGroupId = 'smile-members'
-
-const persons = []
+var persons = []
 persons['4aebfdb6-df12-4b9c-8689-b632b47f2fe9'] = {
 	name: 'Joel'
 }
@@ -92,35 +99,16 @@ app.post('/confirmface', function(req,res) {
 });
 
 app.post('/confirmpurchase', function(req,res) {
-
 	io.emit('confirmPurchase', '')
   	res.send(`You sent: confirmpurchase to Express`)
 });
 
 
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-   //socket.broadcast.emit('hi');
-    //socket.emit('notify', 'adsfadsf');
-});
-
-// app.listen(3000, function () {
-//    console.log('Example app listening on port 3000!')
-//    //trainPersonGroup()
-  
-//    getPersonGroup()
-
-//    // Joel
-//    //detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
-//    // Yumi
-//    //detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
-//  	//detectFace('https://res.cloudinary.com/smilehack/image/upload/v1521286978/i2s6j2ewfvupivazllyz.jpg');
-// })
-
-
-
-
+// io.on('connection', function(socket){
+//   console.log('a user connected');
+//    //socket.broadcast.emit('hi');
+//     //socket.emit('notify', 'adsfadsf');
+// });
 
 function trainPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
