@@ -1,13 +1,15 @@
 //app.js
 var express = require('express')
+var fs = require('fs')
+var https = require('https')
 var app = express()
 var path = require('path');
-const https = require('https');
 const axios = require('axios')
 var cloudinary = require('cloudinary')
 const bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 var config = require('./config.js');
 
@@ -44,18 +46,30 @@ app.post('/faceimage', function (req, res) {
 	uploadBlob(req.body.imgBase64);
  });
 
-app.listen(3000, function () {
-   console.log('Example app listening on port 3000!')
-   //trainPersonGroup()
+// app.listen(3000, function () {
+//    console.log('Example app listening on port 3000!')
+//    //trainPersonGroup()
   
-   getPersonGroup()
+//    getPersonGroup()
 
-   // Joel
-   //detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
-   // Yumi
-   //detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
- 	//detectFace('https://res.cloudinary.com/smilehack/image/upload/v1521286978/i2s6j2ewfvupivazllyz.jpg');
+//    // Joel
+//    //detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
+//    // Yumi
+//    //detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
+//  	//detectFace('https://res.cloudinary.com/smilehack/image/upload/v1521286978/i2s6j2ewfvupivazllyz.jpg');
+// })
+
+
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app)
+.listen(3000, function () {
+  console.log('Example app listening on port 3000! Go to https://localhost:3000/')
 })
+
+
+
 
 function trainPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
