@@ -4,16 +4,16 @@ var app = express()
 const https = require('https');
 const axios = require('axios')
 var cloudinary = require('cloudinary')
-
+var config = require('./config');
 
 cloudinary.config({ 
-  cloud_name: 'sss', 
-  api_key: 'sss', 
-  api_secret: 'sss' 
+  cloud_name: config.cloudinary.cloud_name, 
+  api_key: config.cloudinary.api_key, 
+  api_secret: config.cloudinary.api_secret 
 });
 
 const baseURL = 'https://westcentralus.api.cognitive.microsoft.com'
-const apiKey = 'ddd'
+const apiKey = config.azure.key 
 const personGroupId = 'smile-members'
 
 const persons = []
@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
    //trainPersonGroup()
-  uploadBlob()
+  //uploadBlob()
    //getPersonGroup()
 
    // Joel
