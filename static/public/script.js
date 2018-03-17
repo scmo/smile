@@ -115,6 +115,7 @@ window.onload = function() {
 
 $( "#method-smile" ).click(function() {
     $(".off").hide();
+
     $(".amount").show( 0, function() {
       // show complete.
       setTimeout( function(){
