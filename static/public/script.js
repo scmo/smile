@@ -9,12 +9,11 @@ var facerecognition = () => {
   };
 
   function handleSuccess(stream) {
-  video.srcObject = stream;
-  
+    video.srcObject = stream;
   }
 
   function handleError(error) {
-  console.error('Reeeejected!', error);
+    console.error('Reeeejected!', error);
   }
 
   var imageCounter = 0;
@@ -46,14 +45,15 @@ var facerecognition = () => {
           // - please modify the callback in javascript. All you
           // need is to return the url to the file, you just saved 
           // and than put the image in your browser.
-           img.src = canvas.toDataURL('image/webp');
+
+          if (img != null){
+            img.src = canvas.toDataURL('image/webp');
+          }
           });
-
           
-
           imageCounter++;
           console.log(imageCounter);
-      }
+      } 
   }, 800);
 
   // button.onclick = video.onclick = function() {
