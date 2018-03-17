@@ -61,7 +61,7 @@ var port = process.env.PORT || 3000;
 server = app.listen(port, function () {
   console.log('Example app listening on port 3000! Go to http://localhost:3000/')
   //trainPersonGroup()
-  // /getPersonGroup()
+  //getPersonGroup()
 })
 var io = require('socket.io').listen(server)
 
