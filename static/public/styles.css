@@ -135,7 +135,7 @@ body, html {
   top: 10px;
   position: absolute;
   font-size: 13px;
-  border-radius: 25px;
+  border-radius: 8px;
 }
 
 .success {
@@ -164,7 +164,7 @@ body, html {
   font-size: 20px; 
   text-align: center;
   background-color: #fff;
-  z-index: 1;
+  z-index: 100000;
   display: none;
 }
 
@@ -175,6 +175,19 @@ body, html {
   right: 0;
   top: 180px;
   z-index: 2;
+
 }
 
+.confirmnimg{
+  position: absolute;
+  top: 0;
+  left:0;
+  left: 20px;
+}
+
+.confirmnimgpng{
+  left: 20px;
+  position: absolute;
+  top: 0;
+}
 

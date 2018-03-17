@@ -6,9 +6,11 @@ window.onload = function() {
   
 }
 
+var socket = io();
 
 $( document ).ready(function() {
- 
+
+  var imageCapturing = true;
 
 var facerecognition = () => {
   const button = document.querySelector('#screenshot-button');
@@ -56,23 +58,26 @@ var facerecognition = () => {
   }
 
   var imageCounter = 0;
-  var imageCapturing = true;
+
 
   setInterval(function() {
-      if(imageCapturing == true && imageCounter < 5) {
+     
+      if(imageCapturing == true && imageCounter < 15) {
+        console.log('imageCapturing:' + imageCapturing);
+        console.log('imageCounter:' + imageCounter);
+
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
           canvas.getContext('2d').drawImage(video, 0, 0);
           // Other browsers will fall back to image/png
          
-          console.log(canvas.toDataURL('image/webp'));
+          // console.log(canvas.toDataURL('image/webp'));
 
           face = canvas.toDataURL('image/jpeg', 1)
-          console.log('face')
+         
           if(face.length < 10) {
               return
           }
-
 
           $.ajax({
             type: "POST",
@@ -95,7 +100,7 @@ var facerecognition = () => {
           imageCounter++;
           console.log(imageCounter);
       } 
-  }, 800);
+  }, 2000);
 
   // button.onclick = video.onclick = function() {
   //   canvas.width = video.videoWidth;
@@ -110,9 +115,7 @@ var facerecognition = () => {
 };
 
 
-window.onload = function() {
 
-};
 
 
 $( "#method-smile" ).click(function() {
@@ -132,32 +135,40 @@ $( "#method-smile" ).click(function() {
     });
   });
 
-var socket = io();
-socket.on('notify', function(msg){
-    console.log('message: ' + msg);
-});
+
+
 
 /*
   data.recognized = true | false
   data.name
 */
-socket.on('confirmFace', function(data){
-    console.log('person: ' + data.name);
+var faceIsDedected = false;
 
-    // change text of dedectface
-    $('.dedectface').html(`${data.name} recognized!`);
+socket.on('confirmFace', function(dataPerson){
+  
 
-    //change color
-    $('.dedectface').css("border-color", "#4CAF4F");
-    $('.dedectface').css("background-color", "#4CAF4F");
-    $('.dedectface').css("color", "#fff");
+  if (faceIsDedected == false) {
 
-    setTimeout( function(){
-      $('.dedectface').css("background-color", "none");
-      $('.color').css("color", "#4CAF4F");
-      $('.dedectface').html('Confirm payment with personal face gesture');
-    }, 1000);
+      faceIsDedected = true;
+      imageCapturing = false;
+     
 
+      // change text of dedectface
+      $('.dedectface').html(`${dataPerson.name} recognized!`);
+
+      //change color
+      $('.dedectface').css("border-color", "#4CAF4F");
+      $('.dedectface').css("background-color", "#4CAF4F");
+      $('.dedectface').css("color", "#fff");
+      $('.dedectface').css("padding-right", "8px");
+
+      setTimeout( function(){
+        $('.dedectface').css("background-color", "none");
+        $('.color').css("color", "#4CAF4F");
+        $('.dedectface').html('Confirm payment with personal face gesture');
+       
+      }, 2000);
+    }
 
     // $('.success').show(0, function(){
     //   $('.dedectface').hide()
@@ -166,6 +177,15 @@ socket.on('confirmFace', function(data){
 
 socket.on('confirmPurchase', function(data){
     console.log('purchase confirmed!');
+
+    $('.paymentconfirm').show(0, function(){
+      setInterval(function() {
+        
+        $(".confirmnimg").hide();
+
+      },1000);
+    });
+
 });
 
 });
