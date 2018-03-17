@@ -65,6 +65,7 @@ app.listen(port, function () {
   console.log('Example app listening on port 3000! Go to http://localhost:3000/')
   //trainPersonGroup()
   // /getPersonGroup()
+  console.log(process.env.HEROKU_URL)
 })
 var io = require('socket.io')
 
