@@ -120,6 +120,14 @@ body, html {
   z-index: 1;
 }
 
+#canvasfacetracker {
+  position: absolute;
+  width: 300px;
+  height: 227px;
+  z-index: 300;
+  margin-left:30px;
+}
+
 .label {
   padding: 8px;
   right: 30px;
@@ -143,3 +151,5 @@ body, html {
   border: 1px solid yellow;
   z-index: 100;  
 }
+
+

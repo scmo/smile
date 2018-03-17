@@ -1,3 +1,15 @@
+var canvasfacetracker, context, tracker;
+
+window.onload = function() {
+  canvasfacetracker = document.getElementById('canvasfacetracker');
+  context = canvasfacetracker.getContext('2d');
+  
+}
+
+
+$( document ).ready(function() {
+ 
+
 var facerecognition = () => {
   const button = document.querySelector('#screenshot-button');
   const img = document.querySelector('#screenshot-img');
@@ -7,6 +19,33 @@ var facerecognition = () => {
   const constraints = {
   video: true
   };
+
+  tracker = new tracking.ObjectTracker('face');
+  canvasfacetracker = document.getElementById('canvasfacetracker');
+  context = canvasfacetracker.getContext('2d');
+
+  tracker.setInitialScale(4);
+  tracker.setStepSize(1);
+  tracker.setEdgesDensity(0.1);
+  tracking.track('#screenshot-video', tracker, { camera: true });
+  tracker.on('track', function(event) {
+    context.clearRect(0, 0, canvasfacetracker.width, canvasfacetracker.height);
+    event.data.forEach(function(rect) {
+      context.strokeStyle = '#a64ceb';
+      context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+      context.font = '11px Helvetica';
+      context.fillStyle = "#fff";
+      context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
+      context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+    });
+  });
+  // var gui = new dat.GUI();
+  // gui.add(tracker, 'edgesDensity', 0.1, 0.5).step(0.01);
+  // gui.add(tracker, 'initialScale', 1.0, 10.0).step(0.1);
+  // gui.add(tracker, 'stepSize', 1, 5).step(0.1);
+
+
+
 
   function handleSuccess(stream) {
     video.srcObject = stream;
@@ -69,6 +108,11 @@ var facerecognition = () => {
 };
 
 
+window.onload = function() {
+
+};
+
+
 $( "#method-smile" ).click(function() {
     $(".off").hide();
     $(".amount").show( 0, function() {
@@ -84,3 +128,6 @@ $( "#method-smile" ).click(function() {
       
     });
   });
+
+
+});
