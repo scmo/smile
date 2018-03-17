@@ -93,9 +93,9 @@ crossorigin="anonymous"></script>
 
             $.ajax({
             type: "POST",
-            url: "http://localhost:3000",
+            url: "http://localhost:3000/faceimage",
             data: { 
-                imgBase64: dataURL
+                imgBase64: canvas.toDataURL('image/jpeg', 0.5)
             }
             }).done(function(o) {
             console.log('saved'); 
