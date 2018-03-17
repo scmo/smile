@@ -141,6 +141,25 @@ socket.on('notify', function(msg){
 */
 socket.on('confirmFace', function(data){
     console.log('person: ' + data.name);
+
+    // change text of dedectface
+    $('.dedectface').html(`${data.name} recognized!`);
+
+    //change color
+    $('.dedectface').css("border-color", "#4CAF4F");
+    $('.dedectface').css("background-color", "#4CAF4F");
+    $('.dedectface').css("color", "#fff");
+
+    setTimeout( function(){
+      $('.dedectface').css("background-color", "none");
+      $('.color').css("color", "#4CAF4F");
+      $('.dedectface').html('Confirm payment with personal face gesture');
+    }, 1000);
+
+
+    // $('.success').show(0, function(){
+    //   $('.dedectface').hide()
+    // });
 });
 
 socket.on('confirmPurchase', function(data){
