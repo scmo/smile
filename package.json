@@ -1,0 +1,25 @@
+{
+  "name": "smile",
+  "version": "1.0.0",
+  "description": "pay with your face",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scmo/smile.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scmo/smile/issues"
+  },
+  "homepage": "https://github.com/scmo/smile#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "face-recognition": "^0.7.0",
+    "opencv4nodejs": "^3.3.1"
+  }
+}
