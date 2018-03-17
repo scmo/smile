@@ -91,8 +91,7 @@ body, html {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 300px;
-  height: 100px;
+  padding-top:70px;
   font-size: 20px; 
   text-align: center;
   background-color: #f6f8fa;
@@ -106,9 +105,7 @@ body, html {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 300px;
-  height: 227px;
-  background-color:none;
+  background-color:#3d3d3d;;
 }
 
 .videostream {
@@ -125,7 +122,7 @@ body, html {
 
 .label {
   padding: 8px;
-  right: 5px;
+  right: 30px;
   top: 10px;
   position: absolute;
   font-size: 13px;

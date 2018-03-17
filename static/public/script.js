@@ -1,4 +1,4 @@
-var facerecocnition = () => {
+var facerecognition = () => {
   const button = document.querySelector('#screenshot-button');
   const img = document.querySelector('#screenshot-img');
   const video = document.querySelector('#screenshot-video');
@@ -35,11 +35,11 @@ var facerecocnition = () => {
               return
           }
           $.ajax({
-          type: "POST",
-          url: "https://localhost:3000/faceimage",
-          data: { 
-              imgBase64: face
-          }
+            type: "POST",
+            url: "https://localhost:3000/faceimage",
+            data: { 
+                imgBase64: face
+            }
           }).done(function(o) {
           console.log('saved'); 
           // If you want the file to be visible in the browser 
@@ -64,8 +64,6 @@ var facerecocnition = () => {
   //   img.src = canvas.toDataURL('image/webp');
   // };
 
- 
-
   navigator.mediaDevices.getUserMedia(constraints).
   then(handleSuccess).catch(handleError);
 };
@@ -77,9 +75,9 @@ $( "#method-smile" ).click(function() {
       // show complete.
       setTimeout( function(){
         $(".amount").hide();
-        $(".webcam").show(function(){
+        $(".webcam").show(0, function(){
             // starting taking images from webcam
-            facerecocnition();
+            facerecognition();
           }
         );
       }, 2000);
