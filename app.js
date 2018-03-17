@@ -32,13 +32,14 @@ app.get('/', function (req, res) {
 })
 
 app.post('/faceimage', function (req, res) {
+	console.log(req.body);
 	res.send('Hello Worffld!')
  })
 
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
    //trainPersonGroup()
-  	uploadBlob()
+	uploadBlob()
    //getPersonGroup()
 
    // Joel
