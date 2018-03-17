@@ -44,6 +44,7 @@ app.get('/', function (req, res) {
 
 app.post('/faceimage', function (req, res) {
 	uploadBlob(req.body.imgBase64);
+	res.sendStatus(200)
  });
 
 // app.listen(3000, function () {
@@ -66,14 +67,11 @@ https.createServer({
 }, app)
 .listen(3000, function () {
   console.log('Example app listening on port 3000! Go to https://localhost:3000/')
+  //trainPersonGroup()
 })
-
-
-
 
 function trainPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
-
 
 	const params = {
     	headers: {
@@ -81,7 +79,6 @@ function trainPersonGroup() {
             'Ocp-Apim-Subscription-Key': apiKey,
     	}
     }
-
 	axios.post(url, {}, params)
 	.then(function (response) {
 		//console.log(response);
@@ -172,7 +169,6 @@ function detectFace(faceURL) {
 function identifyFace(faces) {
 
 	url = baseURL + '/face/v1.0/identify'
-	console.log(faces)
 	
 	const data = {
 		faceIds: faces.map(face => face.faceId),
@@ -189,7 +185,7 @@ function identifyFace(faces) {
 	axios.post(url, data, params)
 	.then(function (response) {
 		//console.log(response);
-		
+		console.log('========================')
 		response.data.forEach(function(face) {
 			console.log('Face: ' + face.faceId)
 			console.log('Candidates')
@@ -202,7 +198,7 @@ function identifyFace(faces) {
 	})
 	.catch(function (error) {
 		// console.log(error);
-		console.error('error')
+		console.error('error identifyFace')
 	});
 }
 
