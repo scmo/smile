@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+      <!-- Buttons Core -->
+    <link rel="stylesheet" href="pushy-buttons.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- <div class="terminal-wrapper">
+        <img src="terminal.png" class="terminal">
+    </div> -->
+
+<div class="container">
+    <div class="right">
+        <div class="pos-title">POS</div>
+        <div class="pos-body-wrapper">
+            <div class="scene-payment-method">
+                <div class="total-amount">Total amount: CHF 60.00</div>
+                <div class="payment-method">Select payment method</div>
+                <button class="btn btn--sm btn--green" id="method-smile">smile</button>
+                <button class="btn btn--sm btn--blue">Cash</button>
+                <button class="btn btn--sm btn--blue">Credit Card</button>
+            </div>
+        </div>
+       
+    </div>
+    <div class="left">
+
+            
+            <img id="screenshot-img">
+            <button id="screenshot-button">Take screenshot</button>
+
+
+            <div class="terminal-wrapper">
+                <img src="terminal.png" class="terminal">
+                <div class="display-content">
+                    <div class="display off">
+                    </div>
+                    <div class="display amount">
+                        Total amount: CHF 35.00
+                        <br><br>
+                        Please look into the camera.
+                    </div>
+                    <div class="display webcam">
+                        <span class="label success">Smile approved</span>
+                        <span class="label dedectface">Dedecting your Smile ...</span>
+                        <video id="screenshot-video" class="videostream" autoplay=""></video>
+                    </div>  
+                </div>
+            </div>
+    </div>
+</div>
+
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script src="script.js"></script>
+
+<script>
+    const button = document.querySelector('#screenshot-button');
+    const img = document.querySelector('#screenshot-img');
+    const video = document.querySelector('#screenshot-video');
+
+    const canvas = document.createElement('canvas');
+    const constraints = {
+    video: true
+    };
+
+
+
+    function handleSuccess(stream) {
+    video.srcObject = stream;
+    
+    }
+
+    function handleError(error) {
+    console.error('Reeeejected!', error);
+    }
+
+    var imageCounter = 0;
+    var imageCapturing = true;
+
+    setInterval(function() {
+        if(imageCapturing == true && imageCounter < 5) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            // Other browsers will fall back to image/png
+           
+            console.log(canvas.toDataURL('image/webp'));
+
+            // $.ajax({
+            // type: "POST",
+            // url: "script.php",
+            // data: { 
+            //     imgBase64: dataURL
+            // }
+            // }).done(function(o) {
+            // console.log('saved'); 
+            // // If you want the file to be visible in the browser 
+            // // - please modify the callback in javascript. All you
+            // // need is to return the url to the file, you just saved 
+            // // and than put the image in your browser.
+            //  img.src = canvas.toDataURL('image/webp');
+            // });
+
+            
+
+            imageCounter++;
+            console.log(imageCounter);
+        }
+    }, 800);
+
+    // button.onclick = video.onclick = function() {
+    //   canvas.width = video.videoWidth;
+    //   canvas.height = video.videoHeight;
+    //   canvas.getContext('2d').drawImage(video, 0, 0);
+    //   // Other browsers will fall back to image/png
+    //   img.src = canvas.toDataURL('image/webp');
+    // };
+
+   
+
+    navigator.mediaDevices.getUserMedia(constraints).
+    then(handleSuccess).catch(handleError);
+</script>
+
+
+</body>
+</html>
