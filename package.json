@@ -19,8 +19,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cloudinary": "^1.10.0",
-    "express": "^4.16.3",
-    "face-recognition": "^0.7.0",
-    "opencv4nodejs": "^3.3.1"
+    "express": "^4.16.3"
   }
 }

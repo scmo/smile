@@ -4,7 +4,8 @@ var app = express()
 const https = require('https');
 const axios = require('axios')
 var cloudinary = require('cloudinary')
-
+const bodyParser = require('body-parser');
+app.use(bodyParser);
 
 cloudinary.config({ 
   cloud_name: 'sss', 
@@ -30,10 +31,14 @@ app.get('/', function (req, res) {
    res.send('Hello Worffld!')
 })
 
+app.post('/faceimage', function (req, res) {
+	res.send('Hello Worffld!')
+ })
+
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
    //trainPersonGroup()
-  uploadBlob()
+  	uploadBlob()
    //getPersonGroup()
 
    // Joel
