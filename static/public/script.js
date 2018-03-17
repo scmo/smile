@@ -145,7 +145,24 @@ $( "#method-smile" ).click(function() {
 var faceIsDedected = false;
 
 socket.on('confirmFace', function(dataPerson){
-  
+  console.log(dataPerson)
+  if(dataPerson.recognized == false) {
+    $('.dedectface').html('Face not recognized.');
+    //change color
+    $('.dedectface').css("border-color", "#4CAF4F");
+    $('.dedectface').css("background-color", "#4CAF4F");
+    $('.dedectface').css("color", "#fff");
+    $('.dedectface').css("padding-right", "8px");
+    imageCapturing = false;
+    
+    setTimeout(function () {
+      turnOffCamera()
+      $(".webcam").hide()
+      $(".off").show();
+    }, 2000);
+    
+    return
+  }
 
   if (faceIsDedected == false) {
 

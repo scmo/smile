@@ -130,6 +130,7 @@ app.post('/confirmface', function(req,res) {
 				break
 		}
 	}
+	console.log(data)
 	io.emit('confirmFace', data)
   	res.send(`You sent: ${body} to Express`)
 });
