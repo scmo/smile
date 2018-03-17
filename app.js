@@ -4,9 +4,20 @@ var app = express()
 const https = require('https');
 const axios = require('axios')
 
-const apiKey = 'xxxxx'
+const baseURL = 'https://westcentralus.api.cognitive.microsoft.com'
+const apiKey = ''
 const personGroupId = 'smile-members'
 
+const persons = []
+persons['4aebfdb6-df12-4b9c-8689-b632b47f2fe9'] = {
+	name: 'Joel'
+}
+persons['67203687-01b7-4304-8b0a-3e30d74a9560'] = {
+	name: 'Yumi'
+}
+persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
+	name: 'Moritz'
+}
 app.get('/', function (req, res) {
    res.send('Hello Worffld!')
 })
@@ -15,24 +26,14 @@ app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
    //trainRecognizer()
    //detectFaces()
-   getPersonGroup()
+   //getPersonGroup()
+   // Joel
+   detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
+   // Yumi
+   detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
 })
 
 
-
-
-
-function addFacesToFacelist() {
-	j1 = 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/0ad/3c6/3ccc153.jpg'
-	j2 = 'http://www.joelsonderegger.com/profile.jpg'
-	j3 = 'https://pbs.twimg.com/profile_images/870023307512483840/vs8JHU8q_400x400.jpg'
-	j4 = 'https://cdn-images-1.medium.com/max/1200/0*jNoeOCqcozMl0AA5.jpeg'
-
-	y1 = 'https://www.xing.com/image/d_c_0_08c497ae4_20324917_2/yumi-bae-foto.1024x1024.jpg'
-	y2 = 'https://scontent-sea1-1.cdninstagram.com/vp/cf96c6433777bf38293e20fa0e62d991/5B2D9879/t51.2885-15/s480x480/e35/c0.135.1080.1080/27878329_190924438325711_3923330750904008704_n.jpg?ig_cache_key=MTcxMDkzMDI5MjMyNTI1MjE0Ng%3D%3D.2.c'
-
-
-}
 /*
 Joel
 {
@@ -50,7 +51,7 @@ Moritz
 
 
 function getPersonGroup() {
-	url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/persongroups/' + personGroupId
+	url = baseURL + '/face/v1.0/persongroups/' + personGroupId
 	
 	const params = {
     	headers: {
@@ -72,7 +73,7 @@ function getPersonGroup() {
 }
 
 function getPersonsFromPersonGroup(personGroupId) {
-	url = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/persongroups/' + personGroupId + '/persons'
+	url = baseURL + '/face/v1.0/persongroups/' + personGroupId + '/persons'
 
 	const params = {
     	headers: {
@@ -97,7 +98,67 @@ function getPersonsFromPersonGroup(personGroupId) {
 	});
 }
  
+function detectFace(faceURL) {	
+	url = baseURL + '/face/v1.0/detect?returnFaceId=true'
+	const data = {
+    	url: faceURL
+    }
 
+	const params = {
+    	headers: {
+    		'Content-Type':'application/json',
+            'Ocp-Apim-Subscription-Key': apiKey,
+    	}
+    }
+
+	axios.post(url, data, params)
+	.then(function (response) {
+		//console.log(response);
+		//console.log(response.data[0].faceId)
+		identifyFace(response.data)
+	})
+	.catch(function (error) {
+		//console.log(error);
+		console.error('error detecting')
+	});
+}
+
+function identifyFace(faces) {
+
+	url = baseURL + '/face/v1.0/identify'
+
+
+	const data = {
+		faceIds: faces.map(face => face.faceId),
+    	personGroupId: personGroupId
+    }
+
+	const params = {
+    	headers: {
+    		'Content-Type':'application/json',
+            'Ocp-Apim-Subscription-Key': apiKey,
+    	}
+    }
+
+	axios.post(url, data, params)
+	.then(function (response) {
+		//console.log(response);
+		
+		response.data.forEach(function(face) {
+			console.log('Face: ' + face.faceId)
+			console.log('Candidates')
+			face.candidates.forEach(function(candidate) {
+				//console.log(candidate)
+				console.log(persons[candidate.personId].name + ' - Confidence: ' + candidate.confidence)
+			})	
+		})
+
+	})
+	.catch(function (error) {
+		console.log(error);
+		console.error('error')
+	});
+}
 
 
  
