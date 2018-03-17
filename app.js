@@ -212,21 +212,18 @@ function detectFace(faceURL) {
 }
 
 function identifyFace(faces) {
-
 	url = baseURL + '/face/v1.0/identify'
 	
 	const data = {
 		faceIds: faces.map(face => face.faceId),
     	personGroupId: personGroupId
     }
-
 	const params = {
     	headers: {
     		'Content-Type':'application/json',
             'Ocp-Apim-Subscription-Key': apiKey,
     	}
     }
-
 	axios.post(url, data, params)
 	.then(function (response) {
 		//console.log(response);
@@ -237,12 +234,16 @@ function identifyFace(faces) {
 			face.candidates.forEach(function(candidate) {
 				//console.log(candidate)
 				console.log(persons[candidate.personId].name + ' - Confidence: ' + candidate.confidence)
+				if(candidate.confidence > 0.6) {
+					res = {recognized: true, name: 'asdf' }
+					io.emit('confirmFace', res)
+				}
 			})	
 		})
 
 	})
 	.catch(function (error) {
-		// console.log(error);
+		console.log(error);
 		console.error('error identifyFace')
 	});
 }
