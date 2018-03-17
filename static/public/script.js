@@ -84,3 +84,17 @@ $( "#method-smile" ).click(function() {
       
     });
   });
+
+var socket = io();
+socket.on('notify', function(msg){
+    console.log('message: ' + msg);
+});
+
+/*
+  data.recognized = true | false
+  data.name
+*/
+socket.on('confirmFace', function(data){
+    console.log('person: ' + data.name);
+});
+
