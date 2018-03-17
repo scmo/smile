@@ -3,9 +3,17 @@ var express = require('express')
 var app = express()
 const https = require('https');
 const axios = require('axios')
+var cloudinary = require('cloudinary')
+
+
+cloudinary.config({ 
+  cloud_name: 'sss', 
+  api_key: 'sss', 
+  api_secret: 'sss' 
+});
 
 const baseURL = 'https://westcentralus.api.cognitive.microsoft.com'
-const apiKey = ''
+const apiKey = 'ddd'
 const personGroupId = 'smile-members'
 
 const persons = []
@@ -24,14 +32,14 @@ app.get('/', function (req, res) {
 
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
-   trainPersonGroup()
-   //trainRecognizer()
-   //detectFaces()
+   //trainPersonGroup()
+  uploadBlob()
    //getPersonGroup()
+
    // Joel
-   detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
+   //detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
    // Yumi
-   detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
+   //detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
 })
 
 function trainPersonGroup() {
@@ -169,5 +177,10 @@ function identifyFace(faces) {
 	});
 }
 
+
+function uploadBlob() {
+	cloudinary.v2.uploader.upload("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==", 
+    function(error, result) {console.log(result); });
+}
 
  
