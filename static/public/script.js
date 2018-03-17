@@ -72,9 +72,11 @@ var facerecognition = () => {
           if(face.length < 10) {
               return
           }
+
+
           $.ajax({
             type: "POST",
-            url: "https://localhost:3000/faceimage",
+            url: baseurl + "/faceimage",
             data: { 
                 imgBase64: face
             }
