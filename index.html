@@ -91,11 +91,16 @@ crossorigin="anonymous"></script>
            
             console.log(canvas.toDataURL('image/webp'));
 
+            face = canvas.toDataURL('image/jpeg', 0.5)
+            console.log('face')
+            if(face.length < 10) {
+                return
+            }
             $.ajax({
             type: "POST",
             url: "http://localhost:3000/faceimage",
             data: { 
-                imgBase64: canvas.toDataURL('image/jpeg', 0.5)
+                imgBase64: face
             }
             }).done(function(o) {
             console.log('saved'); 

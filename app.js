@@ -37,22 +37,20 @@ app.get('/', function (req, res) {
 })
 
 app.post('/faceimage', function (req, res) {
-	console.log(req.body);
-	res.send('Hello Worffld!');
 	uploadBlob(req.body.imgBase64);
  });
 
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
    //trainPersonGroup()
-  //uploadBlob()
-   //getPersonGroup()
+  
+   getPersonGroup()
 
    // Joel
    //detectFace('https://www.zuehlke.com/blog/app/uploads/2017/07/1411982043-bpfull.jpg')
    // Yumi
    //detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
- detectFace('https://res.cloudinary.com/smilehack/image/upload/v1521286978/i2s6j2ewfvupivazllyz.jpg');
+ 	//detectFace('https://res.cloudinary.com/smilehack/image/upload/v1521286978/i2s6j2ewfvupivazllyz.jpg');
 })
 
 function trainPersonGroup() {
@@ -156,8 +154,8 @@ function detectFace(faceURL) {
 function identifyFace(faces) {
 
 	url = baseURL + '/face/v1.0/identify'
-
-
+	console.log(faces)
+	
 	const data = {
 		faceIds: faces.map(face => face.faceId),
     	personGroupId: personGroupId
@@ -193,7 +191,11 @@ function identifyFace(faces) {
 
 function uploadBlob(imgData) {
 	cloudinary.v2.uploader.upload(imgData, 
-    function(error, result) {console.log(result); });
+    function(error, result) {
+    	//console.log(result); 
+    	console.log(result.secure_url)
+    	detectFace(result.secure_url)
+    });
 }
 
  
