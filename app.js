@@ -31,6 +31,9 @@ persons['67203687-01b7-4304-8b0a-3e30d74a9560'] = {
 persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 	name: 'Moritz'
 }
+
+
+app.use(express.static("static/public"));
 app.get('/', function (req, res) {
 	console.log(__dirname)
 	res.sendFile(path.join(__dirname + '/index.html'));
