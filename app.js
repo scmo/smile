@@ -1,6 +1,7 @@
 //app.js
 var express = require('express')
 var app = express()
+var path = require('path');
 const https = require('https');
 const axios = require('axios')
 var cloudinary = require('cloudinary')
@@ -33,7 +34,9 @@ persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 	name: 'Moritz'
 }
 app.get('/', function (req, res) {
-   res.send('Hello Worffld!')
+	console.log(__dirname)
+	res.sendFile(path.join(__dirname + '/index.html'));
+   	//res.send('Hello Worffld!')
 })
 
 app.post('/faceimage', function (req, res) {
