@@ -24,6 +24,7 @@ app.get('/', function (req, res) {
 
 app.listen(3000, function () {
    console.log('Example app listening on port 3000!')
+   trainPersonGroup()
    //trainRecognizer()
    //detectFaces()
    //getPersonGroup()
@@ -33,21 +34,29 @@ app.listen(3000, function () {
    detectFace('https://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/20590151_117770065541012_3514565557858861056_n.jpg?ig_cache_key=MTU3NDgyNDU5MDM5NTIwMDk3OQ%3D%3D.2')
 })
 
+function trainPersonGroup() {
+	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
 
-/*
-Joel
-{
-  "personId": "4aebfdb6-df12-4b9c-8689-b632b47f2fe9"
+
+	const params = {
+    	headers: {
+    		'Content-Type':'application/json',
+            'Ocp-Apim-Subscription-Key': apiKey,
+    	}
+    }
+
+	axios.post(url, {}, params)
+	.then(function (response) {
+		//console.log(response);
+		console.log('Training complete')
+	})
+	.catch(function (error) {
+		console.log(error);
+		console.error('error')
+	});
 }
-Yumi
-{
-  "personId": "67203687-01b7-4304-8b0a-3e30d74a9560"
-}
-Moritz
-{
-  "personId": "1533782b-4d8d-41fa-bb96-9d25215ee672"
-}
-*/
+
+
 
 
 function getPersonGroup() {
