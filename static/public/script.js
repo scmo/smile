@@ -76,7 +76,7 @@ var facerecognition = () => {
 
           $.ajax({
             type: "POST",
-            url: baseurl + "/faceimage",
+            url: "/faceimage",
             data: { 
                 imgBase64: face
             }
