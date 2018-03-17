@@ -61,13 +61,13 @@ var port = process.env.PORT || 3000;
 //   //trainPersonGroup()
 //   // /getPersonGroup()
 // })
-app.listen(port, function () {
+server = app.listen(port, function () {
   console.log('Example app listening on port 3000! Go to http://localhost:3000/')
   //trainPersonGroup()
   // /getPersonGroup()
   console.log(process.env.HEROKU_URL)
 })
-var io = require('socket.io')
+var io = require('socket.io').listen(server)
 
 // Routes
 app.get('/', function (req, res) {
@@ -76,8 +76,6 @@ app.get('/', function (req, res) {
    	//res.send('Hello Worffld!')
 })
 
-app.get('/socket.io', function (req, res) {
-})
 
 
 app.post('/faceimage', function (req, res) {
@@ -238,7 +236,7 @@ function identifyFace(faces) {
 			face.candidates.forEach(function(candidate) {
 				//console.log(candidate)
 				console.log(persons[candidate.personId].name + ' - Confidence: ' + candidate.confidence)
-				if(candidate.confidence > 0.6) {
+				if(candidate.confidence > 0.55) {
 					res = {recognized: true, name: persons[candidate.personId].name}
 					io.emit('confirmFace', res)
 				}
