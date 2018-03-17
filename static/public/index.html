@@ -41,8 +41,12 @@
                     </div>
                     <div class="display webcam">
                         <span class="label success">Smile approved</span>
-                        <span class="label dedectface">Dedecting your Smile ...</span>
+                        <span class="label dedectface">Dedecting your Smile <img src="Dual Ring-1s-200px.svg" style="height: 25px;
+                            top: 4px;
+                            right: 10px;
+                            position: absolute;"></span>
                         <video id="screenshot-video" class="videostream" autoplay=""></video>
+                        <canvas id="canvasfacetracker" width="320" height="240"></canvas>
                     </div>  
                 </div>
             </div>
@@ -54,7 +58,13 @@ src="https://code.jquery.com/jquery-3.3.1.min.js"
 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+<script src="../tracking-min.js"></script>
+<script src="../data/face-min.js"></script>
+<script src="../dat.gui.min.js"></script>
+
 <script src="script.js"></script>
+
 
 <script>
     
