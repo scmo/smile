@@ -50,7 +50,7 @@ persons['1533782b-4d8d-41fa-bb96-9d25215ee672'] = {
 
 app.use(express.static("static/public"));
 
-
+var port = process.env.PORT || 3000;
 var server = https.createServer({
   // key: fs.readFileSync('server.key'),
   // cert: fs.readFileSync('server.cert')
