@@ -1,8 +1,6 @@
 //app.js
 var express = require('express')
-//var fs = require('fs')
 var http = require('http')
-// var https = require('https')
 var app = express()
 var path = require('path');
 const axios = require('axios')
@@ -32,7 +30,6 @@ try {
 		api_secret: process.env.ENV_CLOUDINARY_APISECRET
 	});
 }
-
 
 
 const baseURL = 'https://westcentralus.api.cognitive.microsoft.com'
@@ -65,7 +62,6 @@ server = app.listen(port, function () {
   console.log('Example app listening on port 3000! Go to http://localhost:3000/')
   //trainPersonGroup()
   // /getPersonGroup()
-  console.log(process.env.HEROKU_URL)
 })
 var io = require('socket.io').listen(server)
 
@@ -75,8 +71,6 @@ app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname + '/index.html'));
    	//res.send('Hello Worffld!')
 })
-
-
 
 app.post('/faceimage', function (req, res) {
 	uploadBlob(req.body.imgBase64);
@@ -100,7 +94,6 @@ app.post('/confirmface', function(req,res) {
 				break
 		}
 	}
-	
 	io.emit('confirmFace', data)
   	res.send(`You sent: ${body} to Express`)
 });
@@ -110,12 +103,6 @@ app.post('/confirmpurchase', function(req,res) {
   	res.send(`You sent: confirmpurchase to Express`)
 });
 
-
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//    //socket.broadcast.emit('hi');
-//     //socket.emit('notify', 'adsfadsf');
-// });
 
 function trainPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/'+ personGroupId +'/train'
@@ -136,9 +123,6 @@ function trainPersonGroup() {
 		console.error('error')
 	});
 }
-
-
-
 
 function getPersonGroup() {
 	url = baseURL + '/face/v1.0/persongroups/' + personGroupId
